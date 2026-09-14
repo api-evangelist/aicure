@@ -1,0 +1,104 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  https://github.com/AiCure/open_dbm/blob/master/rest_api/app/utils/request_exceptions.py and
+  https://github.com/AiCure/open_dbm/blob/master/rest_api/app/utils/app_exceptions.py
+name: OpenDBM REST API error catalog
+applies_to: OpenDBM REST API (self-hosted)
+format: non-rfc9457
+format_note: >-
+  The service does not emit application/problem+json. It registers three FastAPI exception handlers
+  that return plain JSON. There is no type URI, no title field and no instance field, so an agent
+  cannot branch on a stable machine-readable error identifier - only on the HTTP status and, for
+  application exception cases, on the class name in app_exception.
+envelopes:
+- id: detail-envelope
+  trigger: >-
+    Any StarletteHTTPException raised by the application or by FastAPI itself (401 on a bad or
+    expired token, 404 on an unmatched route).
+  media_type: application/json
+  shape: '{"detail": "<human readable string>"}'
+  handler: http_exception_handler
+- id: validation-envelope
+  trigger: Pydantic request validation failure on a query, form or body field.
+  status: 422
+  media_type: application/json
+  shape: '{"detail": [{"loc": [...], "msg": "...", "type": "..."}]}'
+  handler: request_validation_exception_handler
+- id: app-exception-envelope
+  trigger: An AppExceptionCase subclass raised inside a service.
+  media_type: application/json
+  shape: '{"app_exception": "<class name>", "context": {...}}'
+  handler: app_exception_handler
+problem_types:
+- id: unauthorized
+  status: 401
+  envelope: detail-envelope
+  title: Not authenticated / could not validate credentials
+  cause: >-
+    Missing Authorization header, malformed bearer token, expired JWT, or a username that is not in
+    the instance's user store.
+  remediation: >-
+    Re-run POST /odbm/v1/login with grant_type=password and use the returned access_token as
+    Authorization: Bearer <token>.
+  source: services/auth/auth.py
+- id: inactive-user
+  status: 400
+  envelope: detail-envelope
+  title: Inactive user
+  cause: The authenticated user record carries disabled=true.
+  remediation: Enable the user in the instance's user store, or authenticate as an enabled user.
+  source: services/auth/auth.py (get_current_active_user)
+- id: not-found
+  status: 404
+  envelope: detail-envelope
+  title: Not found
+  cause: >-
+    Declared as the default response on both routers. Returned for an unmatched path under
+    /odbm/v1, and by the file service when the file_url passed to an analysis operation does not
+    resolve on the host.
+  remediation: >-
+    Confirm the path, and pass the exact files/<name> value returned by POST /odbm/v1/upload as
+    file_url.
+  source: 'routers/router.py (default 404 response declared on both routers)'
+- id: validation-error
+  status: 422
+  envelope: validation-envelope
+  title: Unprocessable entity
+  cause: >-
+    A required parameter is absent or the wrong type - most often file_url or platform on an
+    analysis operation, or file_name/file_extension/platform on upload.
+  remediation: >-
+    Supply file_url, platform and the variables list per the request schema in
+    data-model/aicure-data-model.yml.
+  source: utils/request_exceptions.py
+- id: app-exception-item-requires-auth
+  status: 401
+  envelope: app-exception-envelope
+  title: FooItemRequiresAuth
+  cause: An item is not public and requires auth.
+  remediation: Authenticate before requesting the item.
+  source: utils/app_exceptions.py
+- id: app-exception-get-item
+  status: 404
+  envelope: app-exception-envelope
+  title: FooGetItem
+  cause: Item not found.
+  remediation: Verify the identifier.
+  source: utils/app_exceptions.py
+- id: app-exception-create-item
+  status: 500
+  envelope: app-exception-envelope
+  title: FooCreateItem
+  cause: Item creation failed.
+  remediation: Retry; inspect the operator's own Uvicorn logs.
+  source: utils/app_exceptions.py
+gaps:
+- >-
+  The three AppException classes ship under placeholder names (FooCreateItem, FooGetItem,
+  FooItemRequiresAuth) and are not raised anywhere in the published routers or services. They are
+  scaffolding from the FastAPI template the service was built on, recorded here because they are
+  reachable envelope shapes, not because they are a curated error registry.
+- >-
+  No error catalogue, error-code reference or status-code table is published anywhere in the
+  OpenDBM documentation. This catalog is derived entirely from first-party source.

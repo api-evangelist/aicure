@@ -1,0 +1,61 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.github.io/open_dbm/versions
+name: AiCure / OpenDBM change log
+summary: >-
+  AiCure publishes no changelog for its commercial platform. OpenDBM has three overlapping change
+  surfaces - a versions page, a release blog, and GitHub releases - and they do not agree with each
+  other. Recorded as found.
+scheme: semver-ish
+current_version: 0.0.1b6
+current_version_source: https://pypi.org/project/opendbm/
+surfaces:
+- type: versions-page
+  url: https://aicure.github.io/open_dbm/versions
+  status: 200
+  note: Lists 2.1 (latest) and 2.0, each with Documentation and Changelog links.
+- type: github-releases
+  url: https://github.com/AiCure/open_dbm/releases
+  status: 200
+  note: >-
+    Two releases only, both self-described as pipeline tests. The v2.0.0 and v2.1.0 tags the
+    versions page links to do not exist.
+- type: blog
+  url: https://aicure.github.io/open_dbm/blog
+  status: 200
+  note: Two posts, the last from July 2022.
+- type: pull-request-changelog-convention
+  url: https://aicure.github.io/open_dbm/extras/changelogs-in-pull-requests
+  status: 200
+  note: >-
+    A contributor-facing convention requiring a changelog entry in each pull request - the intent
+    was there; the released artifact does not reflect it.
+entries:
+- version: 0.0.1b6
+  date: '2022-12-20'
+  source: https://github.com/AiCure/open_dbm/releases/tag/0.0.1b6
+  title: Pipeline publish testing #2
+  breaking: false
+  highlights:
+  - Release-pipeline verification build; published to PyPI.
+- version: 0.0.1b5
+  date: '2022-11-18'
+  source: https://github.com/AiCure/open_dbm/releases/tag/0.0.1b5
+  title: Release pipeline testing
+  breaking: false
+  highlights:
+  - >-
+    Stated by AiCure to be "not official release version and created / published only for testing
+    purpose".
+- version: '0.2.1'
+  date: '2022-07-24'
+  source: https://aicure.github.io/open_dbm/blog/2022/07/24/version-021
+  title: Version 0.2.1
+  breaking: false
+  highlights:
+  - Announced on the OpenDBM blog; the most recent substantive release note published.
+gaps:
+- No dated changelog exists for the AiCure H.Code commercial platform.
+- >-
+  The two "Changelog" links for versions 2.0 and 2.1 on the versions page both return HTTP 404, so
+  no release notes are actually reachable for the versions the documentation presents as current.

@@ -1,23 +1,140 @@
 aid: aicure
-name: Aicure
-description: 'Aicure is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+name: AiCure
+description: >-
+  AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence
+  software for clinical trials. Its H.Code platform uses smartphone computer vision to confirm dosing,
+  captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site
+  dashboards for sponsors, CROs and investigative sites. The commercial platform is sold to sponsors
+  and CROs and has no public self-serve developer program: the production host api.aicure.com is an
+  AWS API Gateway that answers every anonymous path with 403 Missing Authentication Token, and
+  login.aicure.com is a customer sign-in SPA. AiCure's one public, machine-readable API surface is
+  OpenDBM, the AGPL-3.0 open-source digital-behavioral-measurement toolkit it publishes at
+  github.com/AiCure/open_dbm, which ships a self-hosted FastAPI REST service (POST /odbm/v1/*) with
+  OAuth2 password-grant JWT auth alongside a Python library on PyPI.
+image: https://aicure.com/img/favicon/apple-touch-icon.png
 url: https://raw.githubusercontent.com/api-evangelist/aicure/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-09-14'
 modified: '2026-09-14'
 tags:
 - Company
-apis: []
+- Health Care
+- Clinical Trials
+- Medication Adherence
+- Digital Biomarkers
+- Digital Health
+- Artificial Intelligence
+- Computer Vision
+- Patient Engagement
+- Life Sciences
+- Open Source
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: aicure-opendbm-rest-api
+  name: OpenDBM REST API
+  description: >-
+    The OpenDBM REST API is a self-hosted FastAPI service published inside AiCure's open-source
+    OpenDBM repository (rest_api/). It exposes the OpenDBM digital-biomarker pipeline over HTTP:
+    an OAuth2 password-grant login that returns a JWT, a multipart file upload, and six analysis
+    operations that run facial, acoustic, movement and speech measurement over an uploaded video or
+    audio file and return a ZIP of CSV results. It is run by the consumer on their own machine or
+    infrastructure (the documented development base is http://127.0.0.1:8000); AiCure does not host
+    a public instance of it.
+  humanURL: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+  image: https://aicure.com/img/favicon/apple-touch-icon.png
+  baseURL: http://{opendbm-host}:8000/odbm/v1
+  tags:
+  - Digital Biomarkers
+  - Clinical Trials
+  - Behavioral Measurement
+  - Open Source
+  - Self Hosted
+  properties:
+  - type: Documentation
+    url: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+  - type: APIReference
+    url: https://aicure.github.io/open_dbm/api/api-doc
+  - type: GettingStarted
+    url: https://aicure.github.io/open_dbm/docs/getting-started
+  - type: SourceCode
+    url: https://github.com/AiCure/open_dbm/tree/master/rest_api
+  - type: Authentication
+    url: authentication/aicure-authentication.yml
+  - type: Conventions
+    url: conventions/aicure-conventions.yml
+  - type: ErrorCatalog
+    url: errors/aicure-problem-types.yml
+  - type: DataModel
+    url: data-model/aicure-data-model.yml
+  - type: Sandbox
+    url: sandbox/aicure-sandbox.yml
+  - type: X-MCPServerCandidate
+    url: mcp/aicure-mcp.yml
 common:
 - type: Website
-  url: https://equityzen.com/company/aicure
+  url: https://aicure.com/
+- type: DeveloperPortal
+  url: https://aicure.github.io/open_dbm/
+- type: Documentation
+  url: https://aicure.github.io/open_dbm/docs/getting-started
+- type: APIReference
+  url: https://aicure.github.io/open_dbm/api/api-doc
+- type: GettingStarted
+  url: https://aicure.github.io/open_dbm/docs/getting-started
+- type: Support
+  url: https://aicure.github.io/open_dbm/extras/issue-reporting
+- type: HelpCenter
+  url: https://aicure.com/contact
+- type: Blog
+  url: https://aicure.com/blog
+- type: GitHubOrganization
+  url: https://github.com/AiCure
+- type: Login
+  url: https://login.aicure.com/
+- type: TermsOfService
+  url: https://aicure.com/terms-of-use
+- type: PrivacyPolicy
+  url: https://aicure.com/privacy-policy
+- type: Compliance
+  url: https://aicure.com/company/data-privacy-security
+- type: Packages
+  url: packages/aicure-packages.yml
+- type: SDKs
+  url: packages/aicure-packages.yml
+- type: Conformance
+  url: conformance/aicure-conformance.yml
+- type: Lifecycle
+  url: lifecycle/aicure-lifecycle.yml
+- type: ChangeLog
+  url: changelog/aicure-changelog.yml
+- type: Authentication
+  url: authentication/aicure-authentication.yml
+- type: Conventions
+  url: conventions/aicure-conventions.yml
+- type: ErrorCatalog
+  url: errors/aicure-problem-types.yml
+- type: DataModel
+  url: data-model/aicure-data-model.yml
+- type: Sandbox
+  url: sandbox/aicure-sandbox.yml
+- type: LLMsTxt
+  url: llms/aicure-llms.txt
+- type: Plans
+  url: plans/aicure-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/aicure-rate-limits.yml
+- type: TrustCenter
+  url: security/aicure-trust-center.yml
+- type: DomainSecurity
+  url: security/aicure-domain-security.yml
+x-enrichment:
+  date: '2026-09-14'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v3

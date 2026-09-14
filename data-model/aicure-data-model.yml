@@ -1,0 +1,126 @@
+generated: '2026-09-14'
+method: derived
+source: https://github.com/AiCure/open_dbm/tree/master/rest_api/app/schemas
+name: OpenDBM REST API data model
+applies_to: OpenDBM REST API (self-hosted)
+summary: >-
+  Four Pydantic models make up the whole request/response surface, plus the OpenDBM biomarker
+  variable vocabulary that the variables[] list draws from. The API is file-oriented rather than
+  resource-oriented: there are no server-side entities with identifiers, no cross-entity references
+  and therefore no relationship graph in the usual sense. The only linkage is a string path handed
+  back by upload and passed forward as file_url.
+entities:
+- name: User
+  source: schemas/user.py
+  fields:
+  - name: username
+    type: string
+    required: true
+  - name: email
+    type: string
+    required: false
+  - name: full_name
+    type: string
+    required: false
+  - name: disabled
+    type: boolean
+    required: false
+  note: >-
+    Not exposed as a resource. There is no /users operation; the model backs the in-process user
+    store used by the auth dependency.
+- name: UserInDB
+  source: schemas/user.py
+  extends: User
+  fields:
+  - name: hashed_password
+    type: string
+    required: true
+    sensitive: true
+  note: Server-side only; never serialized to a client.
+- name: Token
+  source: schemas/token.py
+  returned_by: POST /odbm/v1/login
+  fields:
+  - name: access_token
+    type: string
+    format: JWT
+  - name: token_type
+    type: string
+    value: bearer
+- name: TokenData
+  source: schemas/token.py
+  fields:
+  - name: username
+    type: string
+  note: Decoded JWT subject; internal.
+- name: FileProperties
+  source: schemas/file_properties.py
+  used_by: POST /odbm/v1/upload
+  binding: query parameters (FastAPI Depends on a BaseModel)
+  fields:
+  - name: file_name
+    type: string
+    example: facial_speech_verbal_video_test.mp4
+  - name: file_extension
+    type: string
+    example: mp4
+  - name: platform
+    type: string
+    documented_values:
+    - local
+    note: >-
+      Selects the file service implementation. The docs instruct putting the literal string "local"
+      here for a self-hosted run.
+- name: BiomakerRequest
+  source: schemas/biomaker_request.py
+  used_by: >-
+    POST /odbm/v1/video/facial, /video/acoustic, /video/movement, /video/speech, /audio/acoustic,
+    /audio/speech
+  fields:
+  - name: file_url
+    type: string
+    required: true
+    example: files/facial_speech_verbal_video_test.mp4
+    note: The path string returned by upload.
+  - name: platform
+    type: string
+    required: true
+  - name: variables
+    type: array of string
+    required: false
+    default: []
+    example:
+    - audio_intensity
+    - pitch_frequency
+    note: >-
+      Names are drawn from the OpenDBM biomarker variable vocabulary documented at
+      https://aicure.github.io/open_dbm/docs/biomaker-variables - facial activity, emotional
+      expressivity, eye blink behavior, eye gaze directionality, facial asymmetry, facial tremor,
+      head movement, overall/pain expressivity, audio intensity, fundamental and formant
+      frequencies, jitter, shimmer, harmonics-to-noise and glottal-to-noise ratios, pause
+      characteristics, rate of speech, lexical richness, parts of speech, sentiment of speech,
+      vocal tremor and voice prevalence.
+relationships:
+- from: BiomakerRequest
+  to: uploaded file
+  kind: belongs_to
+  via: file_url
+  note: >-
+    A path string, not an identifier. Nothing enforces that it refers to a file this user uploaded,
+    and nothing records the association server-side.
+- from: Token
+  to: User
+  kind: belongs_to
+  via: JWT sub claim
+id_prefixes: []
+id_prefixes_note: >-
+  No opaque or prefixed identifiers exist anywhere in this API. Objects are addressed by filesystem
+  path only.
+outputs:
+- name: analysis result archive
+  media_type: application/zip
+  returned_by: the six analysis operations
+  contents: CSV files, one per computed biomarker variable group
+  note: >-
+    The ZIP is the response body, not a described schema. The column-level contract for the CSVs is
+    documented in prose on the OpenDBM variables pages, not in any machine-readable form.

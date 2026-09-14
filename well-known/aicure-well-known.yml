@@ -1,0 +1,87 @@
+generated: '2026-09-14'
+method: probed
+source: live HTTPS probes, 2026-09-14
+summary: >-
+  Every named /.well-known path was probed on all four hosts the record knows - the registrable
+  domain and www, the production API host api.aicure.com, and the documentation host
+  aicure.github.io. Nothing was served. aicure.com/www return the site's HTML 404 page for every
+  path; api.aicure.com is an AWS API Gateway that answers every anonymous path with HTTP 403
+  {"message":"Missing Authentication Token"}; the GitHub Pages docs host returns its Docusaurus 404
+  shell. No WellKnown or SecurityTxt pointer is emitted, because nothing was found.
+hosts:
+- host: aicure.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: www.aicure.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: api.aicure.com
+  note: >-
+    AWS API Gateway. Every path, including / and every /.well-known/*, returns HTTP 403 with body
+    {"message":"Missing Authentication Token"}. The host is real and reachable but publishes nothing
+    anonymously.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+- host: aicure.github.io
+  note: GitHub Pages host for the OpenDBM documentation (project path /open_dbm/).
+  documents:
+  - path: /open_dbm/llms.txt
+    status: 404
+    file: null

@@ -1,0 +1,28 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.com/book-a-demo
+name: AiCure plans and pricing
+plan_count: 0
+currency: null
+plans: []
+note: >-
+  AiCure publishes no pricing of any kind. Every commercial call to action on aicure.com routes to
+  "Book a Demo" or the contact form; there is no pricing page, no tier table, no quota, no trial and
+  no self-serve sign-up. The platform is sold to pharmaceutical sponsors and CROs under negotiated
+  per-study contracts, and its CRO partner programme (AiPEX) is a partnership agreement rather than
+  a published plan. The one free thing AiCure ships is OpenDBM, which is AGPL-3.0 open source and
+  self-hosted - no cost, and no plan either.
+probed:
+- url: https://aicure.com/book-a-demo
+  status: 200
+- url: https://aicure.com/contact
+  status: 200
+- url: https://aicure.com/
+  status: 200
+  note: Sitemap and full navigation contain no /pricing or /plans path.
+free_tier:
+  exists: true
+  form: open-source
+  url: https://github.com/AiCure/open_dbm
+  license: AGPL-3.0
+  note: Self-hosted only; not a hosted free tier.

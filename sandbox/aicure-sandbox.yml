@@ -1,0 +1,59 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+name: OpenDBM REST API test and sandbox surface
+applies_to: OpenDBM REST API (self-hosted)
+summary: >-
+  There is no hosted sandbox. Because the service is self-hosted, "test mode" is the local run
+  itself - `make dev` on the rest_api directory brings up Uvicorn on 127.0.0.1:8000. AiCure does,
+  however, publish shipped demo credentials and a shipped test media fixture so a first run needs
+  no setup, and both are recorded below verbatim from its own documentation.
+hosted_sandbox: false
+test_vs_live_separation: false
+test_vs_live_note: >-
+  No key prefixes, no mode flag, no separate test host. A self-hosted instance is the only instance;
+  whether it holds real or synthetic subject data is entirely the operator's choice.
+local_run:
+  install:
+  - pip install -r requirements.txt
+  - docker pull opendbmteam/dbm-openface
+  start: make dev
+  base_url: http://127.0.0.1:8000
+  interactive_docs:
+  - http://127.0.0.1:8000/docs
+  - http://127.0.0.1:8000/redoc
+  note: >-
+    FastAPI generates an OpenAPI document at runtime on the operator's own instance. AiCure does not
+    host or publish that document anywhere public, which is why no openapi/ artifact is recorded for
+    this provider.
+demo_credentials:
+- username: aicure
+  password: opendbm
+  published_at: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+  scope: shipped default in the repository's in-memory user store
+  note: >-
+    Published verbatim in AiCure's own public documentation ("Alternatively, you can try to use
+    username 'aicure' and the password is 'opendbm'"). Recorded here as documentation of the
+    shipped default, not as a credential to any AiCure system - it only unlocks a service the
+    reader is running on their own machine. The docs also walk through replacing it with a bcrypt
+    hash of your own via get_password_hash().
+test_fixtures:
+- name: facial_speech_verbal_video_test.mp4
+  type: video/mp4
+  location: rest_api/app/files/facial_speech_verbal_video_test.mp4
+  url: https://github.com/AiCure/open_dbm/blob/master/rest_api/app/files/facial_speech_verbal_video_test.mp4
+  note: >-
+    The video the documented walkthrough uploads and then analyses. Exercises facial, speech and
+    verbal-acoustic measurement in one file.
+- name: test.csv
+  location: rest_api/app/files/test.csv
+  note: Sample result CSV shipped alongside the fixture video.
+worked_example:
+  step_1: POST /odbm/v1/login with grant_type=password&username=aicure&password=opendbm
+  step_2: POST /odbm/v1/upload?file_name=facial_speech_verbal_video_test.mp4&file_extension=mp4&platform=local
+  step_3: >-
+    POST /odbm/v1/video/acoustic?file_url=files%2Ffacial_speech_verbal_video_test.mp4&platform=local
+    with body ["audio_intensity","pitch_frequency"]
+  result: a ZIP archive of CSV results
+test_clocks: false
+trigger_tooling: false

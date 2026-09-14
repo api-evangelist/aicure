@@ -1,0 +1,94 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.github.io/open_dbm/versions
+name: AiCure lifecycle, versioning and support posture
+versioning:
+  api:
+    style: path
+    current: v1
+    pattern: /odbm/v1/...
+    policy_published: false
+    note: >-
+      /odbm/v1 has never been incremented. No versioning policy document exists.
+  library:
+    documented_versions:
+    - '2.1'
+    - '2.0'
+    documented_at: https://aicure.github.io/open_dbm/versions
+    released_to_pypi:
+    - 0.0.1b4
+    - 0.0.1b5
+    - 0.0.1b6
+    latest_on_pypi: 0.0.1b6
+    latest_published: '2022-12-20'
+    note: >-
+      The documentation site and the package registry disagree. The versions page presents 2.0 and
+      2.1 as shipped releases, while PyPI has only three 0.0.1 betas, the newest from December 2022.
+release_process:
+  published: true
+  source: https://aicure.github.io/open_dbm/versions
+  description: >-
+    A release candidate is cut from master, left online for contributors to verify and file bug
+    reports against, then promoted to master; a stable version publishes automatically when a git
+    tag is created.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no Deprecation or Sunset headers, and no deprecated operations. No
+    Deprecation pointer is emitted in apis.yml.
+status_page:
+  exists: false
+  probed:
+  - url: https://status.aicure.com/
+    result: NXDOMAIN
+  note: >-
+    No status page for either the commercial platform or OpenDBM. A self-hosted service has no
+    uptime for the vendor to report, and api.aicure.com is a private customer gateway. No StatusPage
+    pointer is emitted in apis.yml.
+sla:
+  published: false
+  note: No public SLA. The commercial platform is sold under sponsor/CRO master agreements.
+support:
+  channels:
+  - type: issue-tracker
+    url: https://github.com/AiCure/open_dbm/issues
+    scope: OpenDBM
+  - type: guidance
+    url: https://aicure.github.io/open_dbm/extras/issue-reporting
+  - type: community
+    url: https://aicure.github.io/open_dbm/extras/community-discussions
+  - type: stack-overflow
+    note: The docs footer directs questions to Stack Overflow.
+  - type: mailing-list
+    url: https://aicure.github.io/open_dbm/extras/opendbm-listserv-signup
+  - type: email
+    value: opendbm@aicure.com
+    scope: OpenDBM
+  - type: corporate
+    url: https://aicure.com/contact
+maintenance_signals:
+- signal: last commit to AiCure/open_dbm
+  value: '2023-02-10'
+- signal: last PyPI release of opendbm
+  value: '2022-12-20'
+- signal: docs site copyright
+  value: '2022'
+- signal: docs site generator
+  value: Docusaurus v2.0.0-beta.21
+- signal: broken first-party links
+  value: >-
+    Both "Changelog" links on the versions page (releases/tag/v2.0.0 and releases/tag/v2.1.0) return
+    HTTP 404.
+  probed:
+  - url: https://github.com/AiCure/open_dbm/releases/tag/v2.0.0
+    status: 404
+  - url: https://github.com/AiCure/open_dbm/releases/tag/v2.1.0
+    status: 404
+assessment: >-
+  OpenDBM is dormant, not dead - the repository is unarchived, the documentation is live and the
+  issue tracker is open with 5 issues, but nothing has shipped since early 2023 and the released
+  artifact trails the documented one by two major versions.

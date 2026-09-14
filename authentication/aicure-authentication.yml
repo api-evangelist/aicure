@@ -1,0 +1,59 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+docs: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+name: AiCure authentication profile
+summary: >-
+  Two distinct authentication surfaces. The self-hosted OpenDBM REST API uses an OAuth2 password
+  grant that returns a JWT bearer token, applied to every operation except login. The commercial
+  AiCure platform (api.aicure.com) is closed: the AWS API Gateway rejects all anonymous traffic and
+  the customer sign-in flow at login.aicure.com is not documented publicly.
+schemes:
+- id: opendbm-oauth2-password
+  api: OpenDBM REST API
+  type: oauth2
+  flow: password
+  token_endpoint: POST /odbm/v1/login
+  token_request_content_type: application/x-www-form-urlencoded
+  token_request_fields:
+  - grant_type=password
+  - username
+  - password
+  token_response:
+    access_token: JWT
+    token_type: bearer
+  scopes: []
+  scopes_note: >-
+    The token endpoint is FastAPI's OAuth2PasswordRequestForm. No scopes are declared or enforced
+    anywhere in the published router or auth service, so there is no scope surface to catalog and
+    scopes/ is deliberately absent.
+  applied_to: >-
+    Every operation on the main router carries dependencies=[Depends(get_current_active_user)];
+    only POST /odbm/v1/login is unauthenticated.
+  evidence: https://github.com/AiCure/open_dbm/blob/master/rest_api/app/routers/router.py
+- id: opendbm-bearer-jwt
+  api: OpenDBM REST API
+  type: http
+  scheme: bearer
+  bearer_format: JWT
+  header: 'Authorization: Bearer <token>'
+  algorithm: HS256
+  evidence: https://github.com/AiCure/open_dbm/blob/master/rest_api/app/services/auth/auth.py
+  note: >-
+    Tokens are signed and verified locally by the self-hosted instance. Because the deployment is
+    the consumer's own, the signing secret, user store and token lifetime are all operator-owned;
+    the shipped user store is a hard-coded dict (see sandbox/aicure-sandbox.yml).
+- id: aicure-platform-gateway
+  api: AiCure H.Code platform (not public)
+  type: unknown
+  status: gated
+  evidence_url: https://api.aicure.com/
+  evidence_status: 403
+  evidence_body: '{"message":"Missing Authentication Token"}'
+  note: >-
+    api.aicure.com resolves and is an AWS API Gateway, but every anonymous path returns 403 Missing
+    Authentication Token, and AiCure publishes no developer documentation for it. The authentication
+    model is not determinable from public material and has not been guessed here.
+identity_providers: []
+mtls: false
+openid_connect: false

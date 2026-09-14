@@ -1,0 +1,103 @@
+generated: '2026-09-14'
+method: derived
+source: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+name: AiCure MCP candidate
+status: candidate
+summary: >-
+  AiCure ships no MCP server. This is a DERIVED candidate tool list showing what an MCP server over
+  the published OpenDBM REST API would expose; it is not an agent surface AiCure operates, and no
+  MCPServer pointer is emitted in apis.yml. The pointer type used is X-MCPServerCandidate.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+search_record:
+  searched:
+  - target: github.com/AiCure - all 41 public repositories
+    result: no MCP server; the only first-party projects are open_dbm, open_dbm-Gen1, external_cdx
+      and a study-analysis notebook. The rest are forks of GitHub Actions and mobile libraries.
+  - target: npm registry search for aicure / opendbm
+    result: no package
+  - target: PyPI
+    result: opendbm only, a measurement library with no MCP transport
+  - target: https://api.aicure.com/mcp
+    result: HTTP 403 Missing Authentication Token - the AWS API Gateway default for an unmatched
+      route, not an MCP endpoint
+  - target: /.well-known/* on aicure.com, www.aicure.com, api.aicure.com, aicure.github.io
+    result: nothing served; see well-known/aicure-well-known.yml
+candidate_tools:
+- name: opendbm_login
+  rest: POST /odbm/v1/login
+  description: Exchange a username and password for a JWT bearer token.
+  inputs:
+  - username
+  - password
+- name: opendbm_upload_media
+  rest: POST /odbm/v1/upload
+  description: Upload a video or audio file to the OpenDBM host and get back its stored path.
+  inputs:
+  - file
+  - file_name
+  - file_extension
+  - platform
+- name: opendbm_video_facial
+  rest: POST /odbm/v1/video/facial
+  description: >-
+    Compute facial biomarkers - facial activity, action units, emotional and pain expressivity, eye
+    blink and gaze, facial asymmetry and tremor - from an uploaded video.
+  inputs:
+  - file_url
+  - platform
+  - variables
+- name: opendbm_video_acoustic
+  rest: POST /odbm/v1/video/acoustic
+  description: Compute verbal-acoustic biomarkers from the audio track of an uploaded video.
+  inputs:
+  - file_url
+  - platform
+  - variables
+- name: opendbm_video_movement
+  rest: POST /odbm/v1/video/movement
+  description: Compute head and upper-body movement biomarkers from an uploaded video.
+  inputs:
+  - file_url
+  - platform
+  - variables
+- name: opendbm_video_speech
+  rest: POST /odbm/v1/video/speech
+  description: >-
+    Compute speech biomarkers - rate of speech, pause characteristics, lexical richness, parts of
+    speech, sentiment - from an uploaded video.
+  inputs:
+  - file_url
+  - platform
+  - variables
+- name: opendbm_audio_acoustic
+  rest: POST /odbm/v1/audio/acoustic
+  description: Compute verbal-acoustic biomarkers from an uploaded audio file.
+  inputs:
+  - file_url
+  - platform
+  - variables
+- name: opendbm_audio_speech
+  rest: POST /odbm/v1/audio/speech
+  description: Compute speech biomarkers from an uploaded audio file.
+  inputs:
+  - file_url
+  - platform
+  - variables
+caveats:
+- >-
+  Every analysis call is synchronous and long-running - the service processes the media inline via
+  OpenFace in Docker and streams back a ZIP. An MCP tool binding would need an async job model that
+  the API does not currently provide.
+- >-
+  Responses are ZIP archives of CSV, not JSON. A usable MCP tool would have to unpack and project
+  them into structured output.
+- >-
+  The subject matter is video and audio of identifiable people, frequently clinical-trial
+  participants. Any real MCP exposure of this surface would need an explicit consent and PHI-handling
+  posture that does not exist today.

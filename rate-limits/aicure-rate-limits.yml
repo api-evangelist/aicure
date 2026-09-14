@@ -1,0 +1,24 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+name: AiCure rate limits
+limit_count: 0
+limits: []
+headers: []
+status_on_exhaustion: null
+note: >-
+  No rate limits are documented or implemented. The OpenDBM REST API ships no limiter middleware -
+  the published FastAPI application registers only three exception handlers and two routers - and
+  emits no RateLimit-*, X-RateLimit-* or Retry-After headers. Because consumers run the service
+  themselves, throughput is bounded by their own hardware and by the OpenFace/Docker processing
+  time per media file rather than by a vendor quota. The commercial platform at api.aicure.com
+  publishes no developer documentation, so any limits it enforces are not knowable from public
+  material and none have been guessed here.
+probed:
+- url: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+  status: 200
+- url: https://api.aicure.com/
+  status: 403
+  note: '{"message":"Missing Authentication Token"} - no headers of any kind beyond the gateway default.'
+evidence:
+- https://github.com/AiCure/open_dbm/blob/master/rest_api/app/main.py

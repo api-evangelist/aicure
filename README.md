@@ -64,5 +64,13 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Aicure is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://equityzen.com/company/aicure
+AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence software for clinical trials. Its H.Code platform uses smartphone computer vision to confirm dosing, captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site dashboards for pharmaceutical sponsors, CROs and investigative sites.
+
+AiCure's commercial platform has no public developer program: `api.aicure.com` is an AWS API Gateway that answers every anonymous request with HTTP 403 `Missing Authentication Token`, and `login.aicure.com` is a customer sign-in application. Its one public, machine-readable API surface is **OpenDBM**, the AGPL-3.0 open-source digital-behavioral-measurement toolkit it publishes at [github.com/AiCure/open_dbm](https://github.com/AiCure/open_dbm), which ships a **self-hosted** FastAPI REST service (`POST /odbm/v1/*`, OAuth2 password grant to a JWT) alongside the `opendbm` Python package on PyPI. AiCure hosts no public instance of it, and publishes no OpenAPI document — FastAPI generates one at runtime on the operator's own machine.
+
+- Website: https://aicure.com/
+- OpenDBM documentation: https://aicure.github.io/open_dbm/
+- OpenDBM REST API: https://aicure.github.io/open_dbm/extras/odbm-rest-api
+- GitHub organization: https://github.com/AiCure
+- Data privacy & security (ISO 27001, SOC 2, HIPAA, GDPR, 21 CFR Part 11): https://aicure.com/company/data-privacy-security
+- Secondary-market listing (harvest source): https://equityzen.com/company/aicure

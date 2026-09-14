@@ -1,0 +1,52 @@
+generated: '2026-09-14'
+method: searched
+source: https://aicure.com/company/data-privacy-security
+name: AiCure trust and compliance page
+trust_center:
+  exists: true
+  form: marketing-page
+  url: https://aicure.com/company/data-privacy-security
+  status: 200
+  portal: false
+  portal_note: >-
+    This is a page on the corporate site, not a trust portal. There is no Vanta/Drata/SafeBase
+    instance, no document request flow and no subprocessor list; trust.aicure.com does not resolve
+    (NXDOMAIN).
+certifications:
+- name: ISO/IEC 27001
+  claimed: true
+  certificate_published: false
+  auditor_published: false
+  validity_published: false
+- name: SOC 2
+  claimed: true
+  report_published: false
+  report_availability: >-
+    AiCure states SOC 2 reports "are restricted to specified parties with sufficient knowledge and
+    understanding of the service organization's system" - available on request, not published.
+  trust_service_criteria_named:
+  - security
+  - availability
+  - processing integrity
+  - confidentiality
+  - privacy
+regulatory_compliance:
+- HIPAA
+- GDPR
+- 21 CFR Part 11
+data_practices_published:
+- claim: All data is encrypted when collected and maintained encrypted at all times, in motion and
+    at rest.
+- claim: >-
+    AiCure analyses each country of deployment and either makes the required filings or assists the
+    CRO/sponsor in making them.
+- claim: >-
+    Full facial images are retained only on AiCure's secure servers, encrypted at all times, with
+    access limited to a small group of trained and certified video reviewers.
+privacy_policy: https://aicure.com/privacy-policy
+terms_of_service: https://aicure.com/terms-of-use
+gaps:
+- No security.txt on any host (see well-known/aicure-well-known.yml).
+- No vulnerability disclosure policy, bug bounty or security contact page was found.
+- No DNSSEC and no CAA records on aicure.com (see security/aicure-domain-security.yml).
+- 'DMARC is published but the policy is p=none, so nothing is quarantined or rejected.'

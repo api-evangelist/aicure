@@ -1,0 +1,103 @@
+generated: '2026-09-14'
+method: derived
+source: >-
+  https://aicure.github.io/open_dbm/extras/odbm-rest-api and the published router/handler source at
+  https://github.com/AiCure/open_dbm/tree/master/rest_api
+name: OpenDBM REST API conventions
+applies_to: OpenDBM REST API (self-hosted)
+auth:
+  style: >-
+    OAuth2 password grant to POST /odbm/v1/login, then Authorization: Bearer <JWT> on every other
+    operation.
+  detail: authentication/aicure-authentication.yml
+versioning:
+  style: path
+  current: v1
+  pattern: /odbm/{version}/...
+  note: >-
+    The API version is a module constant (api_version = "v1") compiled into both router prefixes.
+    It is unrelated to the OpenDBM library version, which the docs site versions separately (2.0,
+    2.1) and PyPI publishes as 0.0.1b6.
+pagination:
+  style: none
+  note: >-
+    No operation returns a collection. Analysis operations stream back a single ZIP FileResponse
+    and upload returns one info object, so there is nothing to page.
+idempotency:
+  supported: false
+  coverage: none
+  mechanism: null
+  header: null
+  scope: []
+  note: >-
+    No Idempotency-Key header, no request-id echo, no client-supplied token of any kind. Every
+    operation on the API is POST, including the six analysis operations, which are POSTs only
+    because they carry a request body - they are compute-on-upload calls with no server-side
+    record created. Re-firing an upload with the same file_name overwrites the file at the same
+    path rather than erroring or deduplicating. No Idempotency pointer is emitted in apis.yml.
+reversibility:
+  graded: none
+  note: >-
+    The single durable write is POST /odbm/v1/upload, which persists a file under files/<file_name>
+    on the host. There is no delete, cancel, restore or undo operation in the published router, and
+    the documentation states no retention or reversal window. Because the deployment is self-hosted,
+    an operator can remove the file from their own filesystem, but that is not an API affordance and
+    no window is asserted here.
+  write_surface:
+  - operation: upload
+    path: POST /odbm/v1/upload
+    effect: writes the uploaded media file to files/<file_name> on the OpenDBM host
+    reversal_operation: null
+    window: null
+  - operation: video/facial, video/acoustic, video/movement, video/speech, audio/acoustic, audio/speech
+    effect: >-
+      compute-only; reads the previously uploaded file and returns a ZIP of CSV results. Nothing
+      durable is created, so there is nothing to reverse.
+    reversal_operation: null
+    window: null
+dry_run_mode:
+  supported: false
+  note: No preview, validate-only or simulate parameter is documented or implemented.
+field_expansion:
+  supported: false
+sparse_fieldsets:
+  supported: false
+metadata:
+  supported: false
+request_id_tracing:
+  supported: false
+  note: >-
+    No X-Request-Id or correlation header is set by the application. Uvicorn access logs are the
+    only trace, and they belong to the operator's own deployment.
+content_negotiation:
+  request: application/x-www-form-urlencoded (login), multipart/form-data (upload), application/json
+    (analysis request bodies)
+  response: application/json for login/upload/errors, application/zip for analysis results
+error_envelope:
+  format: non-rfc9457
+  shapes:
+  - trigger: HTTP exceptions raised by the application or FastAPI
+    body: '{"detail": <string>}'
+  - trigger: request validation failure
+    status: 422
+    body: '{"detail": [<pydantic error objects>]}'
+  - trigger: application exception cases
+    body: '{"app_exception": <class name>, "context": <object>}'
+  detail: errors/aicure-problem-types.yml
+rate_limit_signaling:
+  supported: false
+  note: >-
+    No limiter and no RateLimit-*/X-RateLimit-*/Retry-After headers in the shipped service. Capacity
+    is whatever the operator's own host provides. See rate-limits/aicure-rate-limits.yml.
+long_running_operations:
+  style: synchronous
+  note: >-
+    Analysis operations block for the duration of the media processing and return the result ZIP on
+    the same connection. There is no job id, no polling endpoint and no callback, which is the
+    single largest agent-readiness gap in this surface.
+cross_links:
+  authentication: authentication/aicure-authentication.yml
+  errors: errors/aicure-problem-types.yml
+  lifecycle: lifecycle/aicure-lifecycle.yml
+  rate_limits: rate-limits/aicure-rate-limits.yml
+  data_model: data-model/aicure-data-model.yml

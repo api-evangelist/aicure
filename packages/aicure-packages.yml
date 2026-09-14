@@ -1,0 +1,53 @@
+generated: '2026-09-14'
+method: searched
+source: https://pypi.org/pypi/opendbm/json
+name: AiCure packages and SDKs
+summary: >-
+  AiCure publishes one first-party package: opendbm, the Python library behind its open-source
+  OpenDBM digital-behavioral-measurement toolkit. Registry search of npm, PyPI, RubyGems,
+  crates.io, NuGet, Maven Central and pkg.go.dev found no other AiCure-published library, and no
+  client SDK exists for the commercial H.Code platform because that platform has no public API.
+packages:
+- name: opendbm
+  registry: pypi
+  url: https://pypi.org/project/opendbm/
+  official: true
+  language: python
+  license: AGPL-3.0
+  version: 0.0.1b6
+  published: '2022-12-20'
+  repository: https://github.com/AiCure/open_dbm
+  documentation: https://aicure.github.io/open_dbm
+  maintainer_email: opendbm@aicure.com
+  description: >-
+    AiCure's OpenDBM calculates digital biomarkers of health and functioning from video or audio of
+    an individual's behavior - facial activity, voice, movement and speech - in one package. It is
+    the library the self-hosted OpenDBM REST API wraps, so it is the native-language interface to
+    the same capability rather than a REST client generated from a spec.
+  versions_published:
+  - 0.0.1b4
+  - 0.0.1b5
+  - 0.0.1b6
+  note: >-
+    DECAY SIGNAL. Every release on PyPI is a pre-release beta and the newest, 0.0.1b6, was published
+    2022-12-20; the GitHub repository's last push is 2023-02-10. The documentation site advertises
+    stable versions 2.0 and 2.1 that were never published to PyPI, and both of its "Changelog" links
+    (github.com/AiCure/open_dbm/releases/tag/v2.0.0 and .../v2.1.0) return HTTP 404. A consumer
+    installing from PyPI gets a 2022 beta, not the 2.1 the docs describe.
+registries_searched:
+- registry: npm
+  query: aicure / opendbm
+  result: no first-party package
+- registry: pypi
+  query: opendbm / open-dbm / aicure
+  result: opendbm (official)
+- registry: rubygems
+  result: no first-party package
+- registry: crates.io
+  result: no first-party package
+- registry: nuget
+  result: no first-party package
+- registry: maven-central
+  result: no first-party package
+- registry: pkg.go.dev
+  result: no first-party package
