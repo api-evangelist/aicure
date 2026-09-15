@@ -1,16 +1,15 @@
 aid: aicure
 name: AiCure
-description: >-
-  AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence
+description: 'AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence
   software for clinical trials. Its H.Code platform uses smartphone computer vision to confirm dosing,
-  captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site
-  dashboards for sponsors, CROs and investigative sites. The commercial platform is sold to sponsors
-  and CROs and has no public self-serve developer program: the production host api.aicure.com is an
-  AWS API Gateway that answers every anonymous path with 403 Missing Authentication Token, and
-  login.aicure.com is a customer sign-in SPA. AiCure's one public, machine-readable API surface is
-  OpenDBM, the AGPL-3.0 open-source digital-behavioral-measurement toolkit it publishes at
-  github.com/AiCure/open_dbm, which ships a self-hosted FastAPI REST service (POST /odbm/v1/*) with
-  OAuth2 password-grant JWT auth alongside a Python library on PyPI.
+  captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site dashboards
+  for sponsors, CROs and investigative sites. The commercial platform is sold to sponsors and CROs and
+  has no public self-serve developer program: the production host api.aicure.com is an AWS API Gateway
+  that answers every anonymous path with 403 Missing Authentication Token, and login.aicure.com is a customer
+  sign-in SPA. AiCure''s one public, machine-readable API surface is OpenDBM, the AGPL-3.0 open-source
+  digital-behavioral-measurement toolkit it publishes at github.com/AiCure/open_dbm, which ships a self-hosted
+  FastAPI REST service (POST /odbm/v1/*) with OAuth2 password-grant JWT auth alongside a Python library
+  on PyPI.'
 image: https://aicure.com/img/favicon/apple-touch-icon.png
 url: https://raw.githubusercontent.com/api-evangelist/aicure/refs/heads/main/apis.yml
 x-type: company
@@ -19,6 +18,18 @@ specificationVersion: '0.20'
 created: '2026-09-14'
 modified: '2026-09-14'
 tags:
+- Company
+- Healthcare
+- Clinical Trials
+- Medication Adherence
+- Digital Biomarkers
+- Digital Health
+- Artificial Intelligence
+- Computer-Vision
+- Patient Engagement
+- Life Sciences
+- Open-Source
+tags_raw:
 - Company
 - Health Care
 - Clinical Trials
@@ -36,20 +47,24 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: aicure-opendbm-rest-api
+- aid: aicure:aicure-opendbm-rest-api
   name: OpenDBM REST API
-  description: >-
-    The OpenDBM REST API is a self-hosted FastAPI service published inside AiCure's open-source
-    OpenDBM repository (rest_api/). It exposes the OpenDBM digital-biomarker pipeline over HTTP:
-    an OAuth2 password-grant login that returns a JWT, a multipart file upload, and six analysis
-    operations that run facial, acoustic, movement and speech measurement over an uploaded video or
-    audio file and return a ZIP of CSV results. It is run by the consumer on their own machine or
-    infrastructure (the documented development base is http://127.0.0.1:8000); AiCure does not host
-    a public instance of it.
+  description: 'The OpenDBM REST API is a self-hosted FastAPI service published inside AiCure''s open-source
+    OpenDBM repository (rest_api/). It exposes the OpenDBM digital-biomarker pipeline over HTTP: an OAuth2
+    password-grant login that returns a JWT, a multipart file upload, and six analysis operations that
+    run facial, acoustic, movement and speech measurement over an uploaded video or audio file and return
+    a ZIP of CSV results. It is run by the consumer on their own machine or infrastructure (the documented
+    development base is http://127.0.0.1:8000); AiCure does not host a public instance of it.'
   humanURL: https://aicure.github.io/open_dbm/extras/odbm-rest-api
   image: https://aicure.com/img/favicon/apple-touch-icon.png
   baseURL: http://{opendbm-host}:8000/odbm/v1
   tags:
+  - Digital Biomarkers
+  - Clinical Trials
+  - Behavioral Measurement
+  - Open-Source
+  - Self-Hosted
+  tags_raw:
   - Digital Biomarkers
   - Clinical Trials
   - Behavioral Measurement
