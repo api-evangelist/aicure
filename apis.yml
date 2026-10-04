@@ -10,6 +10,21 @@ description: 'AiCure (AICure Corporation, New York) builds AI-driven patient eng
   digital-behavioral-measurement toolkit it publishes at github.com/AiCure/open_dbm, which ships a self-hosted
   FastAPI REST service (POST /odbm/v1/*) with OAuth2 password-grant JWT auth alongside a Python library
   on PyPI.'
+deliveryModel:
+  model: saas
+  license_evidence:
+    not_product:
+    - aicure/open_dbm
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: low
+  source:
+  - pricing
+  - repository-not-product
+  generated: '2026-09-25'
+  method: derived
 image: https://aicure.com/img/favicon/apple-touch-icon.png
 url: https://raw.githubusercontent.com/api-evangelist/aicure/refs/heads/main/apis.yml
 x-type: company
@@ -25,10 +40,10 @@ tags:
 - Digital Biomarkers
 - Digital Health
 - Artificial Intelligence
-- Computer-Vision
+- Computer Vision
 - Patient Engagement
 - Life Sciences
-- Open-Source
+- Open Source
 tags_raw:
 - Company
 - Health Care
@@ -41,6 +56,8 @@ tags_raw:
 - Patient Engagement
 - Life Sciences
 - Open Source
+- Computer-Vision
+- Open-Source
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -62,7 +79,7 @@ apis:
   - Digital Biomarkers
   - Clinical Trials
   - Behavioral Measurement
-  - Open-Source
+  - Open Source
   - Self-Hosted
   tags_raw:
   - Digital Biomarkers
@@ -70,6 +87,7 @@ apis:
   - Behavioral Measurement
   - Open Source
   - Self Hosted
+  - Open-Source
   properties:
   - type: Documentation
     url: https://aicure.github.io/open_dbm/extras/odbm-rest-api
