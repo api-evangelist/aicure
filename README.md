@@ -1,4 +1,4 @@
-# Aicure
+# AiCure
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,13 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence software for clinical trials. Its H.Code platform uses smartphone computer vision to confirm dosing, captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site dashboards for pharmaceutical sponsors, CROs and investigative sites.
+AiCure (AICure Corporation, New York) builds AI-driven patient engagement and medication-adherence software for clinical trials. Its H.Code platform uses smartphone computer vision to confirm dosing, captures audio and video for digital phenotyping, and feeds predictive analytics, ePRO and site dashboards for sponsors, CROs and investigative sites. The commercial platform is sold to sponsors and CROs and has no public self-serve developer program: the production host api.aicure.com is an AWS API Gateway that answers every anonymous path with 403 Missing Authentication Token, and login.aicure.com is a customer sign-in SPA. AiCure's one public, machine-readable API surface is OpenDBM, the AGPL-3.0 open-source digital-behavioral-measurement toolkit it publishes at github.com/AiCure/open_dbm, which ships a self-hosted FastAPI REST service (POST /odbm/v1/*) with OAuth2 password-grant JWT auth alongside a Python library on PyPI.
 
-AiCure's commercial platform has no public developer program: `api.aicure.com` is an AWS API Gateway that answers every anonymous request with HTTP 403 `Missing Authentication Token`, and `login.aicure.com` is a customer sign-in application. Its one public, machine-readable API surface is **OpenDBM**, the AGPL-3.0 open-source digital-behavioral-measurement toolkit it publishes at [github.com/AiCure/open_dbm](https://github.com/AiCure/open_dbm), which ships a **self-hosted** FastAPI REST service (`POST /odbm/v1/*`, OAuth2 password grant to a JWT) alongside the `opendbm` Python package on PyPI. AiCure hosts no public instance of it, and publishes no OpenAPI document — FastAPI generates one at runtime on the operator's own machine.
+**Areas:** Company · Healthcare · Clinical Trials · Medication Adherence · Digital Biomarkers · Digital Health · Artificial Intelligence · Computer Vision · Patient Engagement · Life Sciences · Open Source
 
-- Website: https://aicure.com/
-- OpenDBM documentation: https://aicure.github.io/open_dbm/
-- OpenDBM REST API: https://aicure.github.io/open_dbm/extras/odbm-rest-api
-- GitHub organization: https://github.com/AiCure
-- Data privacy & security (ISO 27001, SOC 2, HIPAA, GDPR, 21 CFR Part 11): https://aicure.com/company/data-privacy-security
-- Secondary-market listing (harvest source): https://equityzen.com/company/aicure
+## AiCure on APIs.io
+
+Everything profiled for AiCure is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aicure/](https://apis.io/providers/aicure/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [OpenDBM REST API](https://apis.io/apis/aicure/aicure-opendbm-rest-api/) — The OpenDBM REST API is a self-hosted FastAPI service published inside AiCure's open-source OpenDBM repository (rest_api/). It exposes the OpenDBM…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [AiCure MCP candidate](https://apis.io/servers/aicure/aicure-mcp-candidate/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Aicure Authentication](https://apis.io/security/aicure/aicure-authentication/)
+- [Aicure Domain Security](https://apis.io/security/aicure/aicure-domain-security/)
+- [Aicure Trust Center](https://apis.io/security/aicure/aicure-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Aicure Plans Pricing](https://apis.io/plans/aicure/aicure-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Aicure Rate Limits](https://apis.io/rate-limits/aicure/aicure-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://aicure.com/)
+- [Documentation](https://aicure.github.io/open_dbm/docs/getting-started)
+- [Getting started](https://aicure.github.io/open_dbm/docs/getting-started)
+- [API reference](https://aicure.github.io/open_dbm/api/api-doc)
+- [Support](https://aicure.github.io/open_dbm/extras/issue-reporting)
+- [Blog](https://aicure.com/blog)
+- [Compliance](https://aicure.com/company/data-privacy-security)
+- [Terms of service](https://aicure.com/terms-of-use)
+- [Privacy policy](https://aicure.com/privacy-policy)
+- [GitHub](https://github.com/AiCure)
+
+## API Evangelist rating
+
+**Kin Score 35.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 43.4 |
+
+**Agent readiness 5.8** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 22.1** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aicure/](https://apis.io/providers/aicure/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AiCure: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aicure/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
